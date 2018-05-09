@@ -3,6 +3,7 @@
 
 //TODO: Put traverse in the header file
 void traverse(Node*) ;
+Node* reverselist(Node*) ;
 
 int main() {
 	int data ;
@@ -10,20 +11,21 @@ int main() {
 	Node *head = NULL ;
 
 	while(1){
-		printf("Enter a positive number, press -1 to exit insertion: ") ;
-		scanf("%d ", &data) ;
+		printf("\nEnter a positive number, press -1 to exit insertion: ") ;
+		scanf("%d", &data) ;
 
 		if(data == -1)
 			break ;
 
-		head = append(data, head) ;
+		head = prepend(data, head) ;
 		traverse(head) ;
 	}
 
 	printf("\n Reversing list...") ;
-	reverseList(head) ;
+	head = reverselist(head) ;
 	printf("\n Printing reverse list...") ;
 	traverse(head) ;
+	printf("\n") ;
 	return 0 ;
 }
 
@@ -35,4 +37,20 @@ void traverse(Node *head) {
 		printf("%d ", cursor -> data) ;
 		cursor = cursor -> next ;
 	}
+}
+
+Node* reverselist(Node *head) {
+	Node *previous ;
+	Node *current = head ;
+	Node *next ;
+
+	while(current != NULL){
+		next = current -> next ;
+		current -> next = previous ;
+		previous = current ;
+		current = next ;
+	}
+
+	head = previous ;
+	return head ;
 }

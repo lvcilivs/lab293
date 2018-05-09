@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//TODO: Bug; after reversing, new element addition is giving segmentation fault. 
 typedef struct Node{
     int data;
     struct Node* next;
 } Node;
 
 Node* traverseTillEnd(Node*) ;
-Node* traverseTillItem(Node*, int) ;
+Node* searchNode(Node*, int) ;
 
 Node* create(int data, Node *next) {
 	Node *newNode = (Node*) malloc(sizeof(Node)) ;
@@ -27,12 +28,12 @@ Node* traverseTillEnd(Node *current) {
 	}
 }
 
-Node* traverseTillItem(Node *current, int item) {
+Node* searchNode(Node *current, int item) {
 	if(current -> data == item) {
 		return current ;
 	}
 	else {
-		return traverseTillItem(current -> next, item) ;
+		return searchNode(current -> next, item) ;
 	}
 }
 
@@ -60,7 +61,7 @@ Node* append(int data, Node *head) {
 Node* insertAfter(int data, Node *head, int item) {
 	//TODO: Corner cases
 	Node *cursor = head ;
-	cursor = traverseTillItem(cursor, item) ;
+	cursor = searchNode(cursor, item) ;
 
 	Node *newNode = create(data, cursor -> next) ;
 	cursor -> next = newNode ;
@@ -70,7 +71,7 @@ Node* insertAfter(int data, Node *head, int item) {
 
 Node* deleteAfter(Node *head, int item) {
 	Node *cursor = head ;
-	cursor = traverseTillItem(cursor, item) ;
+	cursor = searchNode(cursor, item) ;
 
 	Node *tmp = cursor -> next ;
 	cursor -> next = tmp -> next ;
@@ -93,6 +94,5 @@ Node* reverseList(Node* head) {
 	head = previous ;
 	return head ;
 }
-
 
 
